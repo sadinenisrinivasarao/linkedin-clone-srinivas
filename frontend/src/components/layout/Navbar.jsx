@@ -40,15 +40,15 @@ const Navbar = () => {
 							<img className='h-12 rounded' src='/navbar-image.png' alt='Srinivas' />
 							</a>
 					</div>
-					<div className='flex items-center gap-2 md:gap-6'>
+					<div className='flex items-center gap-2 md:gap-6 nav-bar-icons'>
 						{authUser ? (
 							<>
 								<Link to={"/"} className='text-neutral flex flex-col items-center'>
-									<Home size={20} />
+									<Home size={25} />
 									<span className='text-xs hidden md:block'>Home</span>
 								</Link>
 								<Link to='/network' className='text-neutral flex flex-col items-center relative'>
-									<Users size={20} />
+									<Users size={25} />
 									<span className='text-xs hidden md:block'>My Network</span>
 									{unreadConnectionRequestsCount > 0 && (
 										<span
@@ -60,7 +60,7 @@ const Navbar = () => {
 									)}
 								</Link>
 								<Link to='/notifications' className='text-neutral flex flex-col items-center relative'>
-									<Bell size={20} />
+									<Bell size={25} />
 									<span className='text-xs hidden md:block'>Notifications</span>
 									{unreadNotificationCount > 0 && (
 										<span
@@ -75,14 +75,14 @@ const Navbar = () => {
 									to={`/profile/${authUser.username}`}
 									className='text-neutral flex flex-col items-center'
 								>
-									<User size={20} />
+									<User size={25} />
 									<span className='text-xs hidden md:block'>Me</span>
 								</Link>
 								<button
 									className='flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-800'
 									onClick={() => logout()}
 								>
-									<LogOut size={20} />
+									<LogOut size={25} />
 									<span className='hidden md:inline'>Logout</span>
 								</button>
 							</>
