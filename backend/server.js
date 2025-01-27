@@ -21,7 +21,7 @@ const __dirname = path.resolve();
 if (process.env.NODE_ENV !== "production") {
 	app.use(
 		cors({
-			origin: "https://linkedin-clone-srinivas.vercel.app",
+			origin: "http://localhost:5173",
 			credentials: true,
 		})
 	);
