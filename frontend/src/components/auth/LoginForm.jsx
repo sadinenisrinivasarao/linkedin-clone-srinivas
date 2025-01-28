@@ -11,6 +11,14 @@ const LoginForm = () => {
 
 	const { mutate: loginMutation, isLoading } = useMutation({
 		mutationFn: (userData) => axiosInstance.post("/auth/login", userData),
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * This function is called when the login mutation is successful.
+ * It invalidates the "authUser" query, ensuring that the authenticated
+ * user data is refetched and updated in the cache.
+ */
+
+/******  308a68d4-679d-4efb-b0cc-82f2ea841277  *******/
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
 		},
