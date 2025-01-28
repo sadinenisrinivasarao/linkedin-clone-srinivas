@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import LoginForm from "../../components/auth/LoginForm";
-import './src/commoncss.css';
+
 
 const LoginPage = () => {
 	return (
@@ -8,7 +8,7 @@ const LoginPage = () => {
 			<div className='sm:mx-auto sm:w-full sm:max-w-md'>
 				
 				<h2 className=' text-center text-3xl font-extrabold text-gray-900'>Log in to your account </h2>
-				<h4 className="text-center">This website developed by <span className="dev-name">Srinivas Sadineni</span></h4>
+				<h4 className="text-center">This website developed by Srinivas Sadineni</h4>
 			</div>
 
 			<div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md shadow-md'>

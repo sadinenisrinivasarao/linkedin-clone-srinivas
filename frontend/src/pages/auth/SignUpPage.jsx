@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SignUpForm from "../../components/auth/SignUpForm";
-import './src/commoncss.css'
+
 
 const SignUpPage = () => {
 	return (
@@ -10,7 +10,7 @@ const SignUpPage = () => {
 				<h2 className='text-center text-3xl font-extrabold text-gray-900'>
 					Make the most of your professional life
 				</h2>
-				<h4 className="text-center">This website developed by <span className="dev-name">Srinivas Sadineni</span></h4>
+				<h4 className="text-center">This website developed by Srinivas Sadineni</h4>
 			</div>
 			<div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md shadow-md'>
 				<div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
