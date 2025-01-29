@@ -42,8 +42,8 @@ const SignUpForm = () => {
 				required
 			/>
 			<input
-				type='email'
-				placeholder='Enter your email id'
+				type='text'
+				placeholder='Enter your username'
 				value={username}
 				onChange={(e) => setUsername(e.target.value)}
 				className='input input-bordered w-full'
@@ -51,7 +51,7 @@ const SignUpForm = () => {
 			/>
 			<input
 				type='email'
-				placeholder='Reenter your email id'
+				placeholder='Enter your email id'
 				value={email}
 				onChange={(e) => setEmail(e.target.value)}
 				className='input input-bordered w-full'
@@ -59,7 +59,7 @@ const SignUpForm = () => {
 			/>
 			<input
 				type='password'
-				placeholder='Password (6+ characters)'
+				placeholder='Password should be at least 8 characters'
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 				className='input input-bordered w-full'
