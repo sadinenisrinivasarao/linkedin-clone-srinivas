@@ -176,6 +176,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						className='w-32 h-32 rounded-full mx-auto object-cover'
 						src={editedData.profilePicture || userData.profilePicture || "/avatar.png"}
 						alt={userData.name}
+						loading="lazy"
 					/>
 
 					{isEditing && (

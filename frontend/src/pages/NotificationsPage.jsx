@@ -85,7 +85,7 @@ const NotificationsPage = () => {
 				className='mt-2 p-2 bg-gray-50 rounded-md flex items-center space-x-2 hover:bg-gray-100 transition-colors'
 			>
 				{relatedPost.image && (
-					<img src={relatedPost.image} alt='Post preview' className='w-10 h-10 object-cover rounded' />
+					<img src={relatedPost.image} loading="lazy" alt='Post preview' className='w-10 h-10 object-cover rounded' />
 				)}
 				<div className='flex-1 overflow-hidden'>
 					<p className='text-sm text-gray-600 truncate'>{relatedPost.content}</p>
@@ -122,6 +122,7 @@ const NotificationsPage = () => {
 													src={notification.relatedUser.profilePicture || "/avatar.png"}
 													alt={notification.relatedUser.name}
 													className='w-12 h-12 rounded-full object-cover'
+													loading="lazy"
 												/>
 											</Link>
 

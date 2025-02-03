@@ -143,6 +143,7 @@ const HomePage = () => {
 						<img
 							src='/my-image.jpg'
 							alt='Srinivas Sadineni'
+							loading="lazy"
 							style={{
 								height: "30%",
 								borderRadius: "50%",
@@ -203,6 +204,7 @@ const HomePage = () => {
 									src='/sidebar-linkedin-logo.png'
 									alt='LinkedIn'
 									style={{ height: "40px" }}
+									loading="lazy"
 								/>
 							</a>
 							<a
@@ -215,6 +217,7 @@ const HomePage = () => {
 									src='/sidebar-portfolio-logo.png'
 									alt='Portfolio'
 									style={{ height: "40px" }}
+									loading="lazy"
 								/>
 							</a>
 							<a
@@ -225,6 +228,7 @@ const HomePage = () => {
 									src='/sidebar-email-logo.png'
 									alt='Email'
 									style={{ height: "40px" }}
+									loading="lazy"
 								/>
 							</a>
 						</div>

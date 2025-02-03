@@ -67,7 +67,7 @@ const PostCreation = ({ user }) => {
 	return (
 		<div className='bg-secondary rounded-lg shadow mb-4 p-4'>
 			<div className='flex space-x-3'>
-				<img src={user.profilePicture || "/avatar.png"} alt={user.name} className='size-12 rounded-full' />
+				<img src={user.profilePicture || "/avatar.png"} alt={user.name} loading="lazy" className='size-12 rounded-full' />
 				<textarea
 					placeholder="What's on your mind?"
 					className='w-full p-3 rounded-lg bg-base-100 hover:bg-base-200 focus:bg-base-200 focus:outline-none resize-none transition-colors duration-200 min-h-[100px]'
@@ -78,7 +78,7 @@ const PostCreation = ({ user }) => {
 
 			{imagePreview && (
 				<div className='mt-4'>
-					<img src={imagePreview} alt='Selected' className='w-full h-auto rounded-lg' />
+					<img src={imagePreview} alt='Selected' loading="lazy" className='w-full h-auto rounded-lg' />
 				</div>
 			)}
 

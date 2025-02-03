@@ -36,6 +36,7 @@ const FriendRequest = ({ request }) => {
 						src={request.sender.profilePicture || "/avatar.png"}
 						alt={request.name}
 						className='w-16 h-16 rounded-full object-cover'
+						loading="lazy"
 					/>
 				</Link>
 

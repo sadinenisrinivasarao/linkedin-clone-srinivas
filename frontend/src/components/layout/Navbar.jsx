@@ -37,7 +37,7 @@ const Navbar = () => {
 				<div className='flex justify-between items-center py-3'>
 					<div className='flex items-center space-x-4'>
 						<a href="https://srinivasarao-sadineni-portfolio.vercel.app/">
-							<img className='h-12 rounded' src='/navbar-image.png' alt='Srinivas' />
+							<img className='h-12 rounded' src='/navbar-image.png' loading="lazy" alt='Srinivas' />
 							</a>
 					</div>
 					<div className='flex items-center gap-2 md:gap-6 nav-bar-icons'>

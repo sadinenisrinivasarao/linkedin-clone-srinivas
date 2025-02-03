@@ -8,6 +8,7 @@ function UserCard({ user, isConnection }) {
 					src={user.profilePicture || "/avatar.png"}
 					alt={user.name}
 					className='w-24 h-24 rounded-full object-cover mb-4'
+					loading="lazy"
 				/>
 				<h3 className='font-semibold text-lg text-center'>{user.name}</h3>
 			</Link>

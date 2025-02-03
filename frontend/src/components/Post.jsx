@@ -117,7 +117,7 @@ const Post = ({ post }) => {
 					)}
 				</div>
 				<p className='mb-4'>{post.content}</p>
-				{post.image && <img src={post.image} alt='Post content' className='rounded-lg post_image mb-4' />}
+				{post.image && <img src={post.image} loading="lazy" alt='Post content' className='rounded-lg post_image mb-4' />}
 
 				<div className='flex justify-between text-info'>
 					<PostAction
@@ -144,6 +144,7 @@ const Post = ({ post }) => {
 									src={comment.user.profilePicture || "/avatar.png"}
 									alt={comment.user.name}
 									className='w-8 h-8 rounded-full mr-2 flex-shrink-0'
+									loading="lazy"
 								/>
 								<div className='flex-grow'>
 									<div className='flex items-center mb-1'>
