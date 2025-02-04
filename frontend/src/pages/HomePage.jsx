@@ -25,7 +25,7 @@ const HomePage = () => {
 		},
 	});
 
-	console.log("posts", posts);
+	
 
 	// Developer Details Styles
 	const styles = {

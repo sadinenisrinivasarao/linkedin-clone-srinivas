@@ -3,9 +3,12 @@ import { Suspense, lazy } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "./lib/axios";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
 const Layout = lazy(() => import("./components/layout/Layout"));
 const HomePage = lazy(() => import("./pages/HomePage"));
+const ChatPage = lazy(() => import("./pages/ChatPage"));
+
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
 const SignUpPage = lazy(() => import("./pages/auth/SignUpPage"));
 const NotificationsPage = lazy(() => import("./pages/NotificationsPage"));
@@ -28,9 +31,7 @@ function App() {
       }
     },
   });
-
-  if (isLoading) return null;
-
+  
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Layout>
@@ -53,6 +54,11 @@ function App() {
               authUser ? <NotificationsPage /> : <Navigate to={"/login"} />
             }
           />
+
+<Route
+          path="/chat"
+          element={authUser ? <ChatPage /> : <Navigate to="/login" />}
+        /> 
           <Route
             path="/network"
             element={authUser ? <NetworkPage /> : <Navigate to={"/login"} />}
