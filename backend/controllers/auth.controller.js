@@ -46,10 +46,10 @@ export const signup = async (req, res) => {
 		const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "3d" });
 
 		res.cookie("jwt-linkedin", token, {
-			httpOnly: true, // prevent XSS attack
+			httpOnly: true, 
 			maxAge: 3 * 24 * 60 * 60 * 1000,
-			sameSite: "strict", // prevent CSRF attacks,
-			secure: process.env.NODE_ENV === "production", // prevents man-in-the-middle attacks
+			sameSite: "strict", 
+			secure: process.env.NODE_ENV === "production", 
 		});
 
 		res.status(201).json({ message: "User registered successfully" });
@@ -58,8 +58,7 @@ export const signup = async (req, res) => {
 
 		
 	} catch (error) {
-		// console.log("Error in signup: ", error.message);
-		res.status(500).json({ message: "Internal server error" });
+				res.status(500).json({ message: "Internal server error" });
 	}
 };
 
@@ -67,19 +66,19 @@ export const login = async (req, res) => {
 	try {
 		const { username, password } = req.body;
 
-		// Check if user exists
+		
 		const user = await User.findOne({ username });
 		if (!user) {
 			return res.status(400).json({ message: "Invalid credentials" });
 		}
 
-		// Check password
+		
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			return res.status(400).json({ message: "Invalid credentials" });
 		}
 
-		// Create and send token
+		
 		const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "3d" });
 		await res.cookie("jwt-linkedin", token, {
 			httpOnly: true,

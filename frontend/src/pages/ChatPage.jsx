@@ -19,18 +19,17 @@ const ChatPage = ({ senderId }) => {
     fetchConnections();
   }, [senderId]);
 
-  // Filter and limit displayed connections
   const filteredConnections = connections
     .filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .slice(0, 5);
 
   return (
     <div className="flex flex-row justify-center items-start p-8 gap-8 bg-gray-100 max-h-[500px]">
-      {/* Sidebar for Connections */}
+
       <div className="w-[30%] bg-primary shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-semibold text-white mb-6">Connections</h2>
 
-        {/* Search Input */}
+
         <div className="mb-4">
           <input
             type="text"
@@ -41,7 +40,6 @@ const ChatPage = ({ senderId }) => {
           />
         </div>
 
-        {/* Connections List */}
         <ul className="space-y-4">
           {filteredConnections.length > 0 ? (
             filteredConnections.map((user) => (
@@ -63,7 +61,6 @@ const ChatPage = ({ senderId }) => {
         </ul>
       </div>
 
-      {/* Chat Window */}
       <div className="w-[70%]">
         {selectedUser ? (
           <ChatWindow receiverId={selectedUser} senderId={senderId} />

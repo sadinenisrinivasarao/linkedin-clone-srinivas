@@ -5,7 +5,7 @@ export const getSuggestedConnections = async (req, res) => {
 	try {
 		const senderId = await User.findById(req.user._id).select("connections");
 
-		// find users who are not already connected, and also do not recommend our own profile!! right?
+		
 		const suggestedUser = await User.find({
 			_id: {
 				$ne: req.user._id,

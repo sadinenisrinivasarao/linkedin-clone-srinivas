@@ -52,7 +52,7 @@ export const acceptConnectionRequest = async (req, res) => {
 			return res.status(404).json({ message: "Connection request not found" });
 		}
 
-		// check if the req is for the current user
+		
 		if (request.recipient._id.toString() !== userId.toString()) {
 			return res.status(403).json({ message: "Not authorized to accept this request" });
 		}
@@ -64,7 +64,7 @@ export const acceptConnectionRequest = async (req, res) => {
 		request.status = "accepted";
 		await request.save();
 
-		// if im your friend then ur also my friend ;)
+	
 		await User.findByIdAndUpdate(request.sender._id, { $addToSet: { connections: userId } });
 		await User.findByIdAndUpdate(userId, { $addToSet: { connections: request.sender._id } });
 
@@ -185,7 +185,7 @@ export const getConnectionStatus = async (req, res) => {
 			}
 		}
 
-		// if no connection or pending req found
+		
 		res.json({ status: "not_connected" });
 	} catch (error) {
 		console.error("Error in getConnectionStatus controller:", error);

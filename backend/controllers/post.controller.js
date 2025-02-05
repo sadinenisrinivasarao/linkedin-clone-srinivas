@@ -56,12 +56,12 @@ export const deletePost = async (req, res) => {
 			return res.status(404).json({ message: "Post not found" });
 		}
 
-		// check if the current user is the author of the post
+		
 		if (post.author.toString() !== userId.toString()) {
 			return res.status(403).json({ message: "You are not authorized to delete this post" });
 		}
 
-		// delete the image from cloudinary as well!
+		
 		if (post.image) {
 			await cloudinary.uploader.destroy(post.image.split("/").pop().split(".")[0]);
 		}
@@ -70,7 +70,7 @@ export const deletePost = async (req, res) => {
 
 		res.status(200).json({ message: "Post deleted successfully" });
 	} catch (error) {
-		// console.log("Error in delete post controller", error.message);
+		
 		res.status(500).json({ message: "Server error" });
 	}
 };
@@ -102,7 +102,7 @@ export const createComment = async (req, res) => {
 			{ new: true }
 		).populate("author", "name email username headline profilePicture");
 
-		// create a notification if the comment owner is not the post owner
+		
 		if (post.author._id.toString() !== req.user._id.toString()) {
 			const newNotification = new Notification({
 				recipient: post.author,
@@ -130,12 +130,12 @@ export const likePost = async (req, res) => {
 		const userId = req.user._id;
 
 		if (post.likes.includes(userId)) {
-			// unlike the post
+			
 			post.likes = post.likes.filter((id) => id.toString() !== userId.toString());
 		} else {
-			// like the post
+		
 			post.likes.push(userId);
-			// create a notification if the post owner is not the user who liked
+			
 			if (post.author.toString() !== userId.toString()) {
 				const newNotification = new Notification({
 					recipient: post.author,

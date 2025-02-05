@@ -59,8 +59,8 @@ const ChatWindow = ({ receiverId, senderId }) => {
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-6">
-      {/* Message List */}
-      <div className="flex-grow mb-4 space-y-4 overflow-y-auto max-h-[500px]"> {/* Fixed height here and overflow for scrolling */}
+      
+      <div className="flex-grow mb-4 space-y-4 overflow-y-auto max-h-[500px]"> 
         {loading ? (
           <p className="text-center text-gray-500">Loading messages...</p>
         ) : error ? (
@@ -88,7 +88,7 @@ const ChatWindow = ({ receiverId, senderId }) => {
         )}
       </div>
 
-      {/* Message Input */}
+      
       <div className="flex items-center space-x-3">
         <input
           type="text"
