@@ -1,106 +1,75 @@
-import React, { useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { axiosInstance } from "../lib/axios";
+import ChatWindow from "../components/ChatWindow";
 
-const ChatPage = () => {
+const ChatPage = ({ senderId }) => {
+  const [connections, setConnections] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [message, setMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Query to get current authenticated user
-  const { data: currentUser } = useQuery({ queryKey: ["authUser"] });
-
-  // Mutation to create a new chat
-  const newChatMutation = useMutation({
-    mutationFn: (chatData) => axiosInstance.post("/chat", chatData),
-    onSuccess: (response) => {
-      // console.log("Chat created successfully:", response.data);
-    },
-    onError: (error) => {
-      console.error("Error creating chat:", error);
-    },
-  });
-
-  // Query to fetch connections
-  const { data: connectionsResponse, isLoading, error } = useQuery({
-    queryKey: ["connections"],
-    queryFn: () => axiosInstance.get("/connections"),
-  });
-
-  if (isLoading) return <p>Loading connections...</p>;
-  if (error) return <p>Failed to load connections.</p>;
-
-  const connections = connectionsResponse?.data || [];
-
-  // Function to handle chat creation
-  const handleCreateChat = (chatId) => {
-    if (!message || !selectedUser) {
-      alert("Please select a user and enter a message.");
-      return;
-    }
-    setSelectedUser(chatId);
-    const chatData = {
-      senderId: currentUser._id,
-      receiverId: selectedUser._id,
-      message,
+  useEffect(() => {
+    const fetchConnections = async () => {
+      try {
+        const res = await axiosInstance.get(`/connections`);
+        setConnections(res.data || []);
+      } catch (error) {
+        console.error("Error fetching connections:", error);
+      }
     };
+    fetchConnections();
+  }, [senderId]);
 
-    // Call mutation to create the chat
-    newChatMutation.mutate(chatData);
-  };
-
+  // Filter and limit displayed connections
+  const filteredConnections = connections
+    .filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0, 5);
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-80 bg-gray-800 text-white p-6 flex flex-col">
-        <h3 className="text-2xl mb-4">Connections</h3>
-        <ul>
-          {connections.length > 0 &&
-            connections.map((user) => (
+    <div className="flex flex-row justify-center items-start p-8 gap-8 bg-gray-100 max-h-[500px]">
+      {/* Sidebar for Connections */}
+      <div className="w-[30%] bg-primary shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-semibold text-white mb-6">Connections</h2>
+
+        {/* Search Input */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search connections..."
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        {/* Connections List */}
+        <ul className="space-y-4">
+          {filteredConnections.length > 0 ? (
+            filteredConnections.map((user) => (
               <li
                 key={user._id}
                 onClick={() => setSelectedUser(user)}
-                className={`cursor-pointer p-3 rounded-lg transition-all duration-200 
-                  ${selectedUser?._id === user._id ? 'bg-primary text-white' : 'hover:bg-gray-700'}`}
+                className={`cursor-pointer p-3 transition duration-200 ${
+                  selectedUser && selectedUser._id === user._id
+                    ? " text-white  ring-offset-2 ring-blue-700 shadow-lg transform scale-105"
+                    : "bg-gray-100 hover:bg-blue-400 hover:text-white"
+                }`}
               >
-                <div className="flex items-center space-x-4">
-                  {/* User's Avatar */}
-                  <img
-                    src={user.profilePicture || "/avatar.png"}
-                    alt={user.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <span>{user.name}</span>
-                </div>
+                <h4 className="text-lg font-medium">{user.name}</h4>
               </li>
-            ))}
+            ))
+          ) : (
+            <p className="text-gray-500">No connections found.</p>
+          )}
         </ul>
       </div>
 
-      {/* Chat Container */}
-      <div className="flex-1 p-8 bg-white">
-        {/* Message Area */}
-        {!selectedUser ? (
-          <div className="text-center text-lg text-gray-600">
-            <p>Select a connection to start chatting</p>
-          </div>
+      {/* Chat Window */}
+      <div className="w-[70%]">
+        {selectedUser ? (
+          <ChatWindow receiverId={selectedUser} senderId={senderId} />
         ) : (
-          <div>
-            <h2 className="text-3xl mb-4 text-gray-800">Chat with {selectedUser.name}</h2>
-
-            <input
-              type="text"
-              placeholder="Type your message here"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full p-4 border border-gray-300 rounded-lg mb-6 text-lg focus:outline-none "
-            />
-            <button
-              onClick={handleCreateChat}
-              className="w-full py-3 bg-primary text-white rounded-lg text-lg hover:bg-primary-dark transition-all"
-            >
-              Send Message
-            </button>
+          <div className="flex justify-center items-center">
+            <p className="text-gray-500 text-lg">Select a user to start chatting.</p>
           </div>
         )}
       </div>

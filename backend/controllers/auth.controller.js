@@ -100,11 +100,11 @@ export const logout = (req, res) => {
 	res.json({ message: "Logged out successfully" });
 };
 
-export const getCurrentUser = async (req, res) => {
+export const getsenderId = async (req, res) => {
 	try {
 		res.json(req.user);
 	} catch (error) {
-		console.error("Error in getCurrentUser controller:", error);
+		console.error("Error in getsenderId controller:", error);
 		res.status(500).json({ message: "Server error" });
 	}
 };

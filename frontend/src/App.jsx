@@ -57,7 +57,7 @@ function App() {
 
 <Route
           path="/chat"
-          element={authUser ? <ChatPage /> : <Navigate to="/login" />}
+          element={authUser ? <ChatPage senderId={authUser}/> : <Navigate to="/login" />}
         /> 
           <Route
             path="/network"

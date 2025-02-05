@@ -3,13 +3,13 @@ import cloudinary from "../lib/cloudinary.js";
 
 export const getSuggestedConnections = async (req, res) => {
 	try {
-		const currentUser = await User.findById(req.user._id).select("connections");
+		const senderId = await User.findById(req.user._id).select("connections");
 
 		// find users who are not already connected, and also do not recommend our own profile!! right?
 		const suggestedUser = await User.find({
 			_id: {
 				$ne: req.user._id,
-				$nin: currentUser.connections,
+				$nin: senderId.connections,
 			},
 		})
 			.select("name username profilePicture headline")

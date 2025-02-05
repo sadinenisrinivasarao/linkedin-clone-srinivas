@@ -162,23 +162,23 @@ export const removeConnection = async (req, res) => {
 export const getConnectionStatus = async (req, res) => {
 	try {
 		const targetUserId = req.params.userId;
-		const currentUserId = req.user._id;
+		const senderIdId = req.user._id;
 
-		const currentUser = req.user;
-		if (currentUser.connections.includes(targetUserId)) {
+		const senderId = req.user;
+		if (senderId.connections.includes(targetUserId)) {
 			return res.json({ status: "connected" });
 		}
 
 		const pendingRequest = await ConnectionRequest.findOne({
 			$or: [
-				{ sender: currentUserId, recipient: targetUserId },
-				{ sender: targetUserId, recipient: currentUserId },
+				{ sender: senderIdId, recipient: targetUserId },
+				{ sender: targetUserId, recipient: senderIdId },
 			],
 			status: "pending",
 		});
 
 		if (pendingRequest) {
-			if (pendingRequest.sender.toString() === currentUserId.toString()) {
+			if (pendingRequest.sender.toString() === senderIdId.toString()) {
 				return res.json({ status: "pending" });
 			} else {
 				return res.json({ status: "received", requestId: pendingRequest._id });
