@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { socket } from "../lib/socket";
 import { axiosInstance } from "../lib/axios";
 import axios from "axios";
@@ -8,6 +8,7 @@ const ChatWindow = ({ receiverId, senderId }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const messagesEndRef = useRef(null); // Reference to scroll to the end of the messages
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -24,6 +25,11 @@ const ChatWindow = ({ receiverId, senderId }) => {
     };
     fetchMessages();
   }, [receiverId._id, senderId._id]);
+
+  // Scroll to the bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -58,38 +64,41 @@ const ChatWindow = ({ receiverId, senderId }) => {
   }, [receiverId._id, senderId._id]);
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-6">
-      
-      <div className="flex-grow mb-4 space-y-4 overflow-y-auto max-h-[500px]"> 
+    <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col h-full">
+      {/* Fixed Header */}
+      <div className="sticky top-0 bg-white z-10 p-4 border-b">
+        <h2 className="text-xl font-semibold text-gray-700">
+          Chat with {receiverId.name}
+        </h2>
+      </div>
+
+      {/* Message List (Scrollable) */}
+      <div className="flex-grow overflow-y-auto max-h-[400px] mb-4 p-4">
         {loading ? (
           <p className="text-center text-gray-500">Loading messages...</p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : messages.length > 0 ? (
-          <>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4 text-center">
-              Chat with {receiverId.name}
-            </h2>
-            <ul className="space-y-3">
-              {messages.map((msg, index) => (
-                <li key={index} className={`flex ${msg.senderId === senderId._id ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-xs px-4 py-2 rounded-lg shadow-md text-sm ${msg.senderId === senderId._id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}>
-                    {msg.senderId !== senderId._id && (
-                      <p className="text-xs text-gray-500 mb-1">{receiverId.name}</p>
-                    )}
-                    <p>{msg.content}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </>
+          <ul className="space-y-3">
+            {messages.map((msg, index) => (
+              <li key={index} className={`flex ${msg.senderId === senderId._id ? "justify-end" : "justify-start"}`}>
+                <div className={`max-w-xs px-4 py-2 rounded-lg shadow-md text-sm ${msg.senderId === senderId._id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}>
+                  {msg.senderId !== senderId._id && (
+                    <p className="text-xs text-gray-500 mb-1">{receiverId.name}</p>
+                  )}
+                  <p>{msg.content}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         ) : (
           <p className="text-center text-gray-500">No messages yet. Start the conversation!</p>
         )}
+        <div ref={messagesEndRef} /> {/* Auto-scroll to the bottom */}
       </div>
 
-      
-      <div className="flex items-center space-x-3">
+      {/* Message Input */}
+      <div className="flex items-center space-x-3 mt-auto">
         <input
           type="text"
           value={message}

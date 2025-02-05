@@ -24,11 +24,11 @@ const ChatPage = ({ senderId }) => {
     .slice(0, 5);
 
   return (
-    <div className="flex flex-row justify-center items-start p-8 gap-8 bg-gray-100 max-h-[500px]">
+    <div className="flex flex-col lg:flex-row justify-between items-start p-8 gap-8 bg-gray-100">
 
-      <div className="w-[30%] bg-primary shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-semibold text-white mb-6">Connections</h2>
-
+      {/* Sidebar */}
+      <div className="w-full lg:w-[30%] bg-primary shadow-lg rounded-lg p-6 lg:h-[75vh] overflow-y-auto">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-6">Connections</h2>
 
         <div className="mb-4">
           <input
@@ -46,11 +46,10 @@ const ChatPage = ({ senderId }) => {
               <li
                 key={user._id}
                 onClick={() => setSelectedUser(user)}
-                className={`cursor-pointer p-3 transition duration-200 ${
-                  selectedUser && selectedUser._id === user._id
-                    ? " text-white  ring-offset-2 ring-blue-700 shadow-lg transform scale-105"
-                    : "bg-gray-100 hover:bg-blue-400 hover:text-white"
-                }`}
+                className={`cursor-pointer p-3 transition duration-200 rounded-lg ${selectedUser && selectedUser._id === user._id
+                    ? "text-white ring-2 ring-offset-2 ring-blue-700 shadow-lg transform scale-105"
+                    : " hover:bg-blue-400 hover:text-white"
+                  }`}
               >
                 <h4 className="text-lg font-medium">{user.name}</h4>
               </li>
@@ -61,11 +60,12 @@ const ChatPage = ({ senderId }) => {
         </ul>
       </div>
 
-      <div className="w-[70%]">
+      {/* Chat Window */}
+      <div className="w-full lg:w-[70%] h-[75vh] flex flex-col">
         {selectedUser ? (
           <ChatWindow receiverId={selectedUser} senderId={senderId} />
         ) : (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center flex-grow">
             <p className="text-gray-500 text-lg">Select a user to start chatting.</p>
           </div>
         )}
