@@ -24,7 +24,7 @@ const ChatPage = ({ senderId }) => {
     .slice(0, 5);
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-start p-8 gap-8 bg-gray-100">
+    <div className="flex flex-col lg:flex-row justify-between items-start gap-8 bg-gray-100">
 
       {/* Sidebar */}
       <div className="w-full lg:w-[30%] bg-primary shadow-lg rounded-lg p-6 lg:h-[75vh] overflow-y-auto">
@@ -46,7 +46,7 @@ const ChatPage = ({ senderId }) => {
               <li
                 key={user._id}
                 onClick={() => setSelectedUser(user)}
-                className={`cursor-pointer p-3 transition duration-200 rounded-lg ${selectedUser && selectedUser._id === user._id
+                className={`text-white cursor-pointer p-3 transition duration-200 rounded-lg ${selectedUser && selectedUser._id === user._id
                     ? "text-white ring-2 ring-offset-2 ring-blue-700 shadow-lg transform scale-105"
                     : " hover:bg-blue-400 hover:text-white"
                   }`}

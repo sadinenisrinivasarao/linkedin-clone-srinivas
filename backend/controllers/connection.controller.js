@@ -79,8 +79,7 @@ export const acceptConnectionRequest = async (req, res) => {
 		res.json({ message: "Connection accepted successfully" });
 
 		
-		const profileUrl = process.env.CLIENT_URL + "/profile/" + request.recipient.username;
-
+		
 	} catch (error) {
 		console.error("Error in acceptConnectionRequest controller:", error);
 		res.status(500).json({ message: "Server error" });

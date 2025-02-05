@@ -83,9 +83,9 @@ const ChatWindow = ({ receiverId, senderId }) => {
             {messages.map((msg, index) => (
               <li key={index} className={`flex ${msg.senderId === senderId._id ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-xs px-4 py-2 rounded-lg shadow-md text-sm ${msg.senderId === senderId._id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}>
-                  {msg.senderId !== senderId._id && (
+                  {msg.senderId !== senderId._id ?(
                     <p className="text-xs text-gray-500 mb-1">{receiverId.name}</p>
-                  )}
+                  ):<p className="text-xs text-gray-700 mb-1">{senderId.name}</p>}
                   <p>{msg.content}</p>
                 </div>
               </li>

@@ -12,8 +12,7 @@ export const getSuggestedConnections = async (req, res) => {
 				$nin: senderId.connections,
 			},
 		})
-			.select("name username profilePicture headline")
-			.limit(3);
+			.select("name username profilePicture headline");
 
 		res.json(suggestedUser);
 	} catch (error) {
