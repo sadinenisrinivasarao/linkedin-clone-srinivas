@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
 			httpOnly: true, 
 			maxAge: 3 * 24 * 60 * 60 * 1000,
 			sameSite: "strict", 
-			secure: process.env.NODE_ENV === "production", 
+			secure: process.env.NODE_ENV === "development", 
 		});
 
 		res.status(201).json({ message: "User registered successfully" });
