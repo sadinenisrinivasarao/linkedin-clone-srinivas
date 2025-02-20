@@ -30,8 +30,7 @@ function App() {
         return null;
       }
     },
-    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
-    cacheTime: 10 * 60 * 1000, // Keep cache for 10 minutes
+  
   });
 
   if (isLoading) {
@@ -46,10 +45,11 @@ function App() {
     <Suspense fallback={<div className="loader-container"><div className="loader"></div></div>}>
       <Layout>
         <Routes>
+       
           <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
           <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
           <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
-          {/* <Route path="/notifications" element={authUser ? <NotificationsPage /> : <Navigate to="/login" />} /> */}
+          <Route path="/notifications" element={authUser ? <NotificationsPage /> : <Navigate to="/login" />} />
           <Route path="/chat" element={authUser ? <ChatPage senderId={authUser} /> : <Navigate to="/login" />} />
           <Route path="/network" element={authUser ? <NetworkPage /> : <Navigate to="/login" />} />
           <Route path="/post/:postId" element={authUser ? <PostPage /> : <Navigate to="/login" />} />

@@ -9,11 +9,11 @@ const Navbar = () => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const queryClient = useQueryClient();
 
-  // const { data: notifications } = useQuery({
-  //   queryKey: ["notifications"],
-  //   queryFn: async () => axiosInstance.get("/notifications"),
-  //   enabled: !!authUser,
-  // });
+  const { data: notifications } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: async () => axiosInstance.get("/notifications"),
+    enabled: !!authUser,
+  });
 
   const { data: connectionRequests } = useQuery({
     queryKey: ["connectionRequests"],
@@ -28,7 +28,7 @@ const Navbar = () => {
     },
   });
 
-  // const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
+   const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
   const unreadConnectionRequestsCount = connectionRequests?.data?.length;
 
   return (
@@ -56,7 +56,7 @@ const Navbar = () => {
                     </span>
                   )}
                 </Link>
-                {/* <Link to="/notifications" className="text-neutral flex flex-col items-center relative">
+                <Link to="/notifications" className="text-neutral flex flex-col items-center relative">
                   <Bell size={25} />
                   <span className="text-xs hidden md:block">Notifications</span>
                   {unreadNotificationCount > 0 && (
@@ -64,7 +64,7 @@ const Navbar = () => {
                       {unreadNotificationCount}
                     </span>
                   )}
-                </Link> */}
+                </Link>
                 <Link to={"/chat"} className="text-neutral flex flex-col items-center">
                   <MessageSquare size={25} />
                   <span className="text-xs hidden md:block">Chats</span>
