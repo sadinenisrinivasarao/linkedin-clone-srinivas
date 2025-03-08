@@ -22,10 +22,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://linkedin-clone-srinivas.onrender.com", 
+    origin:process.env.FRONTEND_URL, 
     credentials: true,
     methods: ["GET", "POST"],
-  },
+  },  
 });
 
 app.use(express.json({ limit: "5mb" })); 
@@ -36,7 +36,7 @@ const __dirname = path.resolve();
 
   app.use(
     cors({
-      origin: "https://linkedin-clone-srinivas.onrender.com",
+      origin: process.env.FRONTEND_URL,
       credentials: true,
     })
   );
