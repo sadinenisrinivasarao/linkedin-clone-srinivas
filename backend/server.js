@@ -19,10 +19,10 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
-
+console.log(process.env.CLIENT_URL);
 const io = new Server(server, {
   cors: {
-    origin: "https://linkedin-clone-srinivas.onrender.com", 
+    origin: process.env.CLIENT_URL, 
     credentials: true,
     methods: ["GET", "POST"],
   },
@@ -33,14 +33,14 @@ app.use(cookieParser());
 
 const __dirname = path.resolve();
 
-if (process.env.NODE_ENV !== "production") {
+
   app.use(
     cors({
-      origin: "https://linkedin-clone-srinivas.onrender.com",
+      origin: process.env.CLIENT_URL,
       credentials: true,
     })
   );
-}
+
 
 
 app.use("/api/v1/auth", authRoutes);
