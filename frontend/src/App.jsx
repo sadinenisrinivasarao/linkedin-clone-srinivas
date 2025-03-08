@@ -35,6 +35,7 @@ function App() {
     try {
       const res = await axiosInstance.get("/auth/me");
       localStorage.setItem("authUser", JSON.stringify(res.data));
+      if (!res.data) return null;
       return res.data;
     } catch (err) {
       if (err.response?.status === 401) {

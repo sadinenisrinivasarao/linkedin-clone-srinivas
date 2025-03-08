@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const getSuggestedConnections = async (req, res) => {
+	
 	try {
 		const senderId = await User.findById(req.user._id).select("connections");
 
@@ -22,6 +23,7 @@ export const getSuggestedConnections = async (req, res) => {
 };
 
 export const getPublicProfile = async (req, res) => {
+	
 	try {
 		const user = await User.findOne({ username: req.params.username }).select("-password");
 

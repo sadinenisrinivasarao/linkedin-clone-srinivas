@@ -25,8 +25,12 @@ const Navbar = () => {
     mutationFn: () => axiosInstance.post("/auth/logout"),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      localStorage.removeItem("authUser");
+      window.location.href = "/login";
     },
   });
+
+  if (!authUser) return null;  
 
    const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
   const unreadConnectionRequestsCount = connectionRequests?.data?.length;
@@ -73,9 +77,9 @@ const Navbar = () => {
                   <User size={25} />
                   <span className="text-xs hidden md:block">Me</span>
                 </Link>
-                <button className="flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-800" onClick={() => logout()}>
+                <button className="flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-800"  onClick={() => logout()}>
                   <LogOut size={25} />
-                  <span className="hidden md:inline">Logout</span>
+                  <span className="hidden md:inline" >Logout</span>
                 </button>
               </>
             ) : (
