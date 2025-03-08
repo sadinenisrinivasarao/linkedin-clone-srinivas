@@ -25,7 +25,7 @@ const io = new Server(server, {
     origin: "https://linkedin-clone-srinivas.onrender.com", 
     credentials: true,
     methods: ["GET", "POST"],
-  },
+  },  
 });
 
 app.use(express.json({ limit: "5mb" })); 
@@ -33,14 +33,14 @@ app.use(cookieParser());
 
 const __dirname = path.resolve();
 
-if (process.env.NODE_ENV !== "production") {
+
   app.use(
     cors({
       origin: "https://linkedin-clone-srinivas.onrender.com",
       credentials: true,
     })
   );
-}
+
 
 
 app.use("/api/v1/auth", authRoutes);
