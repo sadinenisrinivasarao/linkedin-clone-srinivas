@@ -58,8 +58,9 @@ if (process.env.NODE_ENV === "development") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
+  
 }
-
+connectDB();
 io.on("connection", (socket) => {
   
   socket.on("join_chat", (chatId) => {
@@ -87,7 +88,7 @@ app.post("/chat", (req, res) => {
 
 server.listen(process.env.PORT || 5000, () => {
  console.log(`Server running on port ${process.env.PORT || 5000}`);
-  connectDB();
+ 
 });
 
 

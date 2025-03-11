@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Suspense, lazy, memo, useCallback } from "react";
+import { Suspense, lazy, memo, useCallback, useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "./lib/axios";
 import "./index.css";
 
-
+// Lazy Loading Components
 const Layout = lazy(() => import("./components/layout/Layout"));
 const HomePage = lazy(() => import(/* webpackPrefetch: true */ "./pages/HomePage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
@@ -16,6 +16,7 @@ const NetworkPage = lazy(() => import("./pages/NetworkPage"));
 const PostPage = lazy(() => import("./pages/PostPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
+// Skeleton Loader for Better UX
 const SkeletonLoader = () => (
   <div className="skeleton">
     <div className="skeleton-box"></div>
@@ -23,20 +24,18 @@ const SkeletonLoader = () => (
   </div>
 );
 
-
 const MemoizedLayout = memo(Layout);
 
 function App() {
-
+  // Fetch Authenticated User
   const fetchAuthUser = useCallback(async () => {
     const cachedUser = localStorage.getItem("authUser");
     if (cachedUser) return JSON.parse(cachedUser);
 
     try {
-      const res = await axiosInstance.get("/auth/me");
-      localStorage.setItem("authUser", JSON.stringify(res.data));
-      if (!res.data) return null;
-      return res.data;
+      const { data } = await axiosInstance.get("/auth/me");
+      localStorage.setItem("authUser", JSON.stringify(data));
+      return data || null;
     } catch (err) {
       if (err.response?.status === 401) {
         localStorage.removeItem("authUser");
@@ -47,14 +46,16 @@ function App() {
     }
   }, []);
 
+  // React Query for Caching & Optimizing API Calls
   const { data: authUser, isLoading } = useQuery({
     queryKey: ["authUser"],
     queryFn: fetchAuthUser,
-    staleTime: 5 * 60 * 1000, 
-    refetchOnWindowFocus: false, 
-    refetchInterval: 60000, 
+    staleTime: 5 * 60 * 1000, // 5 minutes cache time
+    refetchOnWindowFocus: false,
+    refetchInterval: 60000, // Refetch every minute
   });
 
+  // Prevent Rendering Until User Data is Loaded
   if (isLoading) {
     return (
       <div className="loader-container">
@@ -71,7 +72,7 @@ function App() {
           <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
           <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
 
-         
+          {/* Protected Routes */}
           <Route path="/notifications" element={<ProtectedRoute authUser={authUser}><NotificationsPage /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute authUser={authUser}><ChatPage senderId={authUser} /></ProtectedRoute>} />
           <Route path="/network" element={<ProtectedRoute authUser={authUser}><NetworkPage /></ProtectedRoute>} />
@@ -84,10 +85,9 @@ function App() {
   );
 }
 
-
+// Memoized Protected Route Component
 const ProtectedRoute = memo(({ authUser, children }) => {
-  if (!authUser) return <Navigate to="/login" />;
-  return children;
+  return authUser ? children : <Navigate to="/login" />;
 });
 
 export default App;
