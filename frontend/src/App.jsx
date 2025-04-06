@@ -68,16 +68,19 @@ function App() {
     <Suspense fallback={<SkeletonLoader />}>
       <MemoizedLayout>
         <Routes>
+          {!authUser && <Route path="/" element={<Navigate to="/login" />} />}
+         
           <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
           <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
           <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
 
-          {/* Protected Routes */}
+         
           <Route path="/notifications" element={<ProtectedRoute authUser={authUser}><NotificationsPage /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute authUser={authUser}><ChatPage senderId={authUser} /></ProtectedRoute>} />
           <Route path="/network" element={<ProtectedRoute authUser={authUser}><NetworkPage /></ProtectedRoute>} />
           <Route path="/post/:postId" element={<ProtectedRoute authUser={authUser}><PostPage /></ProtectedRoute>} />
           <Route path="/profile/:username" element={<ProtectedRoute authUser={authUser}><ProfilePage /></ProtectedRoute>} />
+
         </Routes>
         <Toaster />
       </MemoizedLayout>
